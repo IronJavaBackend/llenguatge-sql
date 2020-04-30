@@ -306,3 +306,115 @@ WHERE p.nombre IS NULL;;
 ```bash
 No, porque la tabla producto tiene una clave foránea que la relaciona con la tabla fabricante y ésta es obligatoria.
 ```
+
+### Consultas resumen
+
+### 1. Calcula el número total de productos que hay en la tabla productos.
+```bash
+SELECT count(*) FROM producto;
+```
+
+### 2. Calcula el número total de fabricantes que hay en la tabla fabricante.
+```bash
+SELECT count(*) FROM fabricante;
+```
+
+### 3. Calcula el número de valores distintos de código de fabricante aparecen en la tabla productos.
+```bash
+SELECT count(DISTINCT codigo_fabricante) FROM producto;
+```
+
+### 4. Calcula la media del precio de todos los productos.
+```bash
+SELECT AVG(precio) FROM producto;
+```
+
+### 5. Calcula el precio más barato de todos los productos.
+```bash
+SELECT MIN(precio) FROM producto;
+```
+
+### 6. Calcula el precio más caro de todos los productos.
+```bash
+SELECT MAX(precio) FROM producto;
+```
+
+### 7. Lista el nombre y el precio del producto más barato.
+```bash
+SELECT nombre, precio FROM producto ORDER BY precio ASC LIMIT 1;
+```
+
+### 8. Lista el nombre y el precio del producto más caro.
+```bash
+SELECT nombre, precio FROM producto ORDER BY precio DESC LIMIT 1;
+```
+
+### 9. Calcula la suma de los precios de todos los productos.
+```bash
+SELECT SUM(precio) FROM producto;
+```
+
+### 10. Calcula el número de productos que tiene el fabricante Asus.
+```bash
+SELECT COUNT(*) 
+FROM producto p
+JOIN fabricante f ON (p.codigo_fabricante = f.codigo)
+WHERE f.nombre = 'Asus';
+```
+
+### 11. Calcula la media del precio de todos los productos del fabricante Asus.
+```bash
+SELECT AVG(precio) 
+FROM producto p
+JOIN fabricante f ON (p.codigo_fabricante = f.codigo)
+WHERE f.nombre = 'Asus';
+```
+
+### 12. Calcula el precio más barato de todos los productos del fabricante Asus.
+```bash
+SELECT MIN(precio) 
+FROM producto p
+JOIN fabricante f ON (p.codigo_fabricante = f.codigo)
+WHERE f.nombre = 'Asus';
+```
+
+### 13. Calcula el precio más caro de todos los productos del fabricante Asus.
+```bash
+SELECT MIN(precio) 
+FROM producto p
+JOIN fabricante f ON (p.codigo_fabricante = f.codigo)
+WHERE f.nombre = 'Asus';
+```
+
+### 14. Calcula la suma de todos los productos del fabricante Asus.
+```bash
+SELECT SUM(precio) 
+FROM producto p
+JOIN fabricante f ON (p.codigo_fabricante = f.codigo)
+WHERE f.nombre = 'Asus';
+```
+
+### 15. Muestra el precio máximo, precio mínimo, precio medio y el número total de productos que tiene el fabricante Crucial.
+```bash
+SELECT MAX(precio), MIN(precio), AVG(precio), count(*)
+FROM producto p
+JOIN fabricante f ON (p.codigo_fabricante = f.codigo)
+WHERE f.nombre = 'Crucial';
+```
+
+### 16. Muestra el número total de productos que tiene cada uno de los fabricantes. El listado también debe incluir los fabricantes que no tienen ningún producto. El resultado mostrará dos columnas, una con el nombre del fabricante y otra con el número de productos que tiene. Ordene el resultado descendentemente por el número de productos.
+```bash
+SELECT count(p.nombre), f.nombre
+FROM producto p 
+RIGHT JOIN fabricante f  ON (p.codigo_fabricante = f.codigo)
+GROUP BY f.nombre
+ORDER BY count(p.nombre) DESC;
+```
+
+### 17. Muestra el precio máximo, precio mínimo y precio medio de los productos de cada uno de los fabricantes. El resultado mostrará el nombre del fabricante junto con los datos que se solicitan.
+```bash
+SELECT MAX(p.precio), MIN(p.precio), AVG(p.precio), f.nombre
+FROM producto p 
+RIGHT JOIN fabricante f  ON (p.codigo_fabricante = f.codigo)
+GROUP BY f.nombre;
+```
